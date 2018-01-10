@@ -2,6 +2,9 @@ import logging
 import time
 import os
 
+import gi
+gi.require_version('Playerctl', '1.0')
+
 from gi.repository import Playerctl, GLib
 
 location = os.path.realpath(
@@ -39,5 +42,5 @@ while True:
 
 logger.info('Spotify found')
 
-# TODO: handle initialisation of app
+# TODO: handle initialisation of first song
 # views.on_track_change(player)

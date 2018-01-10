@@ -22,6 +22,8 @@ def on_track_change(pl):
             time=song_to_write['start_time'].strftime("%d-%m-%Y %H:%M:%S")
         )
 
+        # TODO: implement saving of play history to database
+
         logger.info("Writing song - " + log_data)
 
     logger.info("Current song - {song} - {title}".format(
