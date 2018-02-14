@@ -2,10 +2,18 @@ import logging
 import time
 import os
 
+from sqlalchemy.engine import create_engine
 import gi
-gi.require_version('Playerctl', '1.0')
 
+gi.require_version('Playerctl', '1.0')
 from gi.repository import Playerctl, GLib
+
+DATABASE_URL = os.environ.get('DATABASE_URL', '')
+
+if not DATABASE_URL:
+    raise EnvironmentError('DATABASE_URL is not specified')
+
+engine = create_engine(DATABASE_URL)
 
 location = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from datetime import datetime, timedelta
 
 import app
@@ -23,7 +22,7 @@ def on_track_change(pl):
         )
 
         # TODO: implement saving of play history to database
-
+        # int(pl.props.metadata['mpris:length']/1000000) - length of song
         logger.info("Writing song - " + log_data)
 
     logger.info("Current song - {song} - {title}".format(
