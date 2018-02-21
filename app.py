@@ -1,8 +1,10 @@
 import logging
 import time
 import os
+from contextlib import contextmanager
 
 from sqlalchemy.engine import create_engine
+from sqlalchemy.orm import sessionmaker
 import gi
 
 gi.require_version('Playerctl', '1.0')
@@ -14,6 +16,23 @@ if not DATABASE_URL:
     raise EnvironmentError('DATABASE_URL is not specified')
 
 engine = create_engine(DATABASE_URL)
+
+Session = sessionmaker(engine)
+
+
+@contextmanager
+def session_scope():
+    """Provide a transactional scope around a series of operations."""
+    session = Session()
+    try:
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+
 
 location = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
